@@ -1,0 +1,80 @@
+<aside id="CartDrawer" class="CartDrawer" aria-hidden="true" tabindex="-1">
+  <div class="CartDrawer__overlay" data-cart-close></div>
+
+  <div class="CartDrawer__panel" role="dialog" aria-modal="true" aria-labelledby="CartDrawerTitle">
+    <header class="CartDrawer__header">
+      <h2 id="CartDrawerTitle">Your basket</h2>
+
+      <button
+        class="CartDrawer__clear"
+        data-cart-clear
+        type="button"
+        {% unless cart.item_count > 0 %}
+          hidden
+        {% endunless %}
+      >
+        {% render 'icons', icon: 'rotate-left', class: 'CartDrawer__icon' %}
+        Clear all
+      </button>
+
+      <button class="CartDrawer__close" data-cart-close type="button" aria-label="Close">×</button>
+    </header>
+
+    {%- comment -%} template for a cart line item, used by JS to inject with content{%- endcomment -%}
+    <template id="CartItemTemplate">
+      <article class="CartItem" data-line="">
+        <div class="CI__media">
+          <img class="CI__img" alt="" loading="lazy" decoding="async" width="120" height="120" hidden>
+          <div class="CI__ph" hidden></div>
+        </div>
+
+        <div class="CI__main">
+          <div class="CI__title"></div>
+          <div class="CI__meta" hidden></div>
+
+          <div class="CI__row">
+            <div class="Qty">
+              <button class="Qty__btn" data-qty="-1" aria-label="Decrease">−</button>
+              <input class="Qty__input" type="number" min="1" value="1">
+              <button class="Qty__btn" data-qty="+1" aria-label="Increase">+</button>
+            </div>
+
+            <div class="CI__container">
+              <div class="CI__price"></div>
+
+              <button class="CI__remove" data-remove aria-label="Remove">
+                {% render 'icons', icon: 'trash', class: 'Icon' %}
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <div class="CartDrawer__body" data-cart-body>
+      <p class="CartDrawer__empty">Your basket is empty.</p>
+    </div>
+
+    <footer class="CartDrawer__footer">
+      <div class="CartDrawer__summary">
+        <div class="CartDrawer__count"><span data-cart-count>0</span> Items</div>
+        <div class="CartDrawer__subtotal"><strong data-cart-subtotal aria-live="polite">£0.00</strong></div>
+      </div>
+
+      <button class="CartDrawer__loyalty" data-loyalty-earn hidden type="button">
+        <span class="Points__label">Earn</span>
+        <span class="Points__value">0</span>
+        <span class="Points__unit">points with this order</span>
+      </button>
+
+      <a class="CheckoutBtn" href="{{ routes.cart_url }}">Checkout now</a>
+    </footer>
+  </div>
+</aside>
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": []
+}
+{% endschema %}

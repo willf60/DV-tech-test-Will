@@ -1,20 +1,60 @@
 <!doctype html>
-<html lang="{{ shop.locale }}">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="">
-  <link rel="canonical" href="{{ canonical_url }}">
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="">
+    <link rel="canonical" href="{{ canonical_url }}">
 
-  <title>{{ shop.name }}</title>
+    <title>
+      {{ page_title }}
+      –
+      {{ shop.name }}
+    </title>
+    <meta name="description" content="">
+    {{ content_for_header }}
 
-  <meta name="description" content="">
+    {{ 'custom.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'custom.js' | asset_url }}" defer></script>
+  </head>
+  <body>
+    <header class="Header">
+      <div class="Header__inner">
+        <div class="Logo">L O G O</div>
+        <nav class="Header__icons">
+          <a href="{{ routes.account_url }}" aria-label="Account">
+            {% render 'icons', icon: 'user', class: 'Icon' %}
+          </a>
+          <a href="{{ routes.cart_url }}" aria-label="Cart" class="Header__cart">
+            {% render 'icons', icon: 'cart', class: 'Icon' %}
+            <span class="Header__cartCount" data-cart-count aria-live="polite" hidden>0</span>
+          </a>
+        </nav>
+      </div>
+    </header>
 
-  {{ content_for_header }}
-</head>
+    <main id="MainContent">
+      {{ content_for_layout }}
+    </main>
 
-<body>
-  {{ content_for_layout }}
-</body>
+    <footer class="Footer">
+      <div class="Footer__inner">
+        <div class="Logo">L O G O</div>
+        <div class="Footer__links">
+          <ul class="LinkCol">
+            <li><a href="#">Link 01</a></li>
+            <li><a href="#">Link 02</a></li>
+            <li><a href="#">Link 03</a></li>
+            <li><a href="#">Link 04</a></li>
+          </ul>
+          <ul class="LinkCol">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms &amp; Conditions</a></li>
+            <li><a href="#">Cookie Settings</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+    {% section 'cart-drawer' %}
+  </body>
 </html>

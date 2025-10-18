@@ -1,0 +1,91 @@
+{% assign cols = section.settings.columns_desktop | default: 4 %}
+
+<section>
+  <h1 class="PageTitle">{{ section.settings.page_title }}</h1>
+
+  {% paginate collection.products by 24 %}
+    {% if collection.products_count > 0 %}
+      <ul class="CollectionGrid Grid--cols-{{ cols }}">
+        {% for product in collection.products %}
+          {%- assign first_available = product.variants | where: 'available', true | first -%}
+          {%- assign img = product.featured_image -%}
+
+          <li class="ProductCard" data-product-handle="{{ product.handle }}">
+            <button class="WishlistBtn" type="button" aria-label="Add to wishlist">
+              {% render 'icons', icon: 'wishlist', class: 'Wishlist__icon' %}
+            </button>
+
+            <a href="{{ product.url }}">
+              <div class="Card__media">
+                {% if img %}
+                  {{
+                    img
+                    | image_url: width: 1600
+                    | image_tag:
+                      alt: product.title,
+                      class: 'Card__img',
+                      widths: '400,800,1000,1200,1600',
+                      sizes: '(min-width: 1200px) 25vw, 100vw'
+                  }}
+                {% else %}
+                  <div class="Card__placeholder" aria-hidden="true"></div>
+                {% endif %}
+              </div>
+            </a>
+
+            <div class="Card__meta">
+              <a class="Card__title" href="{{ product.url }}">{{ product.title }}</a>
+
+              <hr class="Card__Divider">
+
+              <div class="Card__controls">
+                <div class="Qty">
+                  <button class="Qty__btn" data-qty="-1" aria-label="Decrease">−</button>
+                  <input class="Qty__input" type="number" min="1" step="1" value="1" inputmode="numeric">
+                  <button class="Qty__btn" data-qty="+1" aria-label="Increase">+</button>
+                </div>
+
+                <div class="Price">
+                  <span>{{ product.price | money }}</span>
+                </div>
+              </div>
+
+              {%- if first_available -%}
+                <button
+                  type="button"
+                  class="AddBtn"
+                  data-action="add-to-cart"
+                  data-variant-id="{{ first_available.id }}"
+                >
+                  Add to cart
+                </button>
+              {%- else -%}
+                <button type="button" class="AddBtn" disabled>Sold out</button>
+              {%- endif -%}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Add some products into this collection</p>
+    {% endif %}
+  {% endpaginate %}
+</section>
+
+{% schema %}
+{
+  "name": "Main collection",
+  "settings": [
+    { "type": "text", "id": "page_title", "label": "Page title", "default": "Our Products" },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Desktop columns",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,560 @@
+/* ================= Variables ================= */
+:root {
+  --navy: #163257;
+  --bg: #fff;
+  --fg: #111;
+  --muted: #6b7280;
+  --border: #e9ecf0;
+  --card-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* ================= Base ================= */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  color: var(--fg);
+  background: var(--bg);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* ================= Theme Header ================= */
+.Header {
+  background: var(--navy);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.Header__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+}
+
+.Logo {
+  letter-spacing: 0.5rem;
+}
+
+.Header__icons {
+  width: 100px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.Icon {
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+}
+
+.Header .Icon path {
+  fill: var(--bg);
+}
+
+.dv-Header {
+  color: #fff;
+}
+
+.dv-Header .Icon path {
+  fill: currentColor;
+}
+
+/* ================= Theme Footer =================*/
+.Footer {
+  background: var(--navy);
+  color: #c7d2fe;
+  margin-top: 40px;
+}
+
+.Footer__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  justify-content: space-between;
+}
+
+.Footer__links {
+  display: flex;
+  gap: 40px;
+}
+
+.LinkCol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.LinkCol a {
+  color: #e5ecff;
+}
+
+/* ================= Collections Page ================= */
+#MainContent {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.PageTitle {
+  text-align: center;
+  margin: 12px 0 24px;
+  font-size: 26px;
+}
+
+/* Collections grid */
+
+.CollectionGrid {
+  padding: 0;
+  display: grid;
+  gap: 28px;
+}
+
+.Grid--cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 1023px) {
+  .Grid--cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 639px) {
+  .Grid--cols-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* product cards */
+
+.ProductCard {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+}
+
+.WishlistBtn {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  z-index: 1;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  box-shadow: var(--card-shadow);
+  cursor: pointer;
+}
+
+.WishlistBtn path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+
+.WishlistBtn:hover .Wishlist__icon path {
+  fill: currentColor;
+}
+
+.Card__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-bottom: 1px solid var(--border);
+}
+
+.Card__img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.Card__placeholder {
+  position: absolute;
+  inset: 0;
+}
+
+.Card__meta {
+  padding: 16px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .Card__meta button:hover {
+    filter: invert();
+  }
+}
+
+.Card__meta button:active {
+  filter: brightness(0.8);
+  transition: filter 0.1s;
+}
+
+.Card__title {
+  font-weight: 600;
+}
+
+.Card__subtitle {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.Card__Divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 12px 0;
+}
+
+.Card__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Product quantities (both cart & collections) */
+
+.Qty {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.Qty__btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #f9fafb;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.Qty__input {
+  width: 56px;
+  text-align: center;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.CartItem.is-min .Qty__btn[data-qty="-1"] {
+  opacity: 0;
+}
+
+@media screen and (max-width: 434px) {
+  .CI__main {
+    flex-direction: column;
+  }
+
+  .CI__row {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+}
+
+/* price and add to cart */
+
+.Price {
+  font-weight: 700;
+}
+
+.AddBtn {
+  margin-top: 12px;
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid var(--fg);
+  padding: 12px 14px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.AddBtn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ================= Cart Drawer =================*/
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.CartDrawer {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.CartDrawer__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  backdrop-filter: blur(2px);
+}
+
+.CartDrawer__panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(100%, 400px);
+  background: #fff;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  box-shadow: -12px 0 28px rgba(0, 0, 0, 0.12);
+  transform: translateX(100%);
+  transition: transform 0.25s ease;
+  border-left: 1px solid #e5e7eb;
+}
+
+@media (max-width: 550px) {
+  .CartDrawer__panel {
+    width: 92vw;
+  }
+}
+
+.CartDrawer.is-open {
+  pointer-events: auto;
+}
+
+.CartDrawer.is-open .CartDrawer__overlay {
+  opacity: 1;
+}
+
+.CartDrawer.is-open .CartDrawer__panel {
+  transform: translateX(0);
+}
+
+/* cart header */
+
+.CartDrawer__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #eef0f3;
+  background: #f7f9fc;
+}
+
+.CartDrawer__header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.CartDrawer__clear {
+  background: none;
+  border: 0;
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.CartDrawer__loyalty.is-success {
+  outline: 2px solid currentColor;
+}
+
+.CartDrawer__icon {
+  width: 12px;
+  height: 12px;
+}
+
+.CartDrawer__close {
+  background: none;
+  border: 0;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* cart body */
+
+.CartDrawer__body {
+  overflow: auto;
+  padding: 12px;
+  display: grid;
+  gap: 12px;
+  background: var(--border);
+}
+
+.CartDrawer__empty {
+  color: #6b7280;
+  padding: 16px;
+}
+
+.CartList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+}
+
+/* cart item */
+
+.CartItem {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+  justify-content: space-evenly;
+}
+
+.CI__media {
+  max-width: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+}
+
+.CI__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.CI__ph {
+  width: 100%;
+  height: 100%;
+  background: #f3f4f6;
+}
+
+.CI__main {
+  width: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.CI__title {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.CI__meta {
+  color: #6b7280;
+  font-size: 12px;
+}
+
+.CI__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+
+.CI__container {
+  display: flex;
+  width: 100%;
+}
+
+.CI__container button {
+  margin-left: auto;
+}
+
+.CI__price {
+  font-weight: 700;
+  margin-left: auto;
+}
+
+/* remove item button */
+
+.CI__remove {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: #6b7280;
+  justify-self: end;
+}
+
+.CI__remove svg {
+  width: 18px;
+  height: 18px;
+}
+
+.CI__remove svg path {
+  fill: currentColor;
+}
+
+/* cart footer */
+
+.CartDrawer__footer {
+  padding: 12px;
+  border-top: 1px solid #eef0f3;
+  display: grid;
+  gap: 10px;
+}
+
+.CartDrawer__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+}
+
+/* cart loyalty points btn */
+
+.CartDrawer__loyalty {
+  width: 100%;
+  border: 0;
+  border-radius: 10px;
+  padding: 12px;
+  background: linear-gradient(#ffb545, #ff8c00);
+  color: #111;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* cart checkout */
+
+.CheckoutBtn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 14px;
+  border-radius: 999px;
+  background: #111;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+}
